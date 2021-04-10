@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {{ product.product_name }}
+    <br>
+    {{ product.price }}円
+
+    <form action="" method="POST">
+    {% csrf_token %}
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" 
+            data-key="{{ public_key }}" data-amount="{{ product.price }}" data-name="DjangoEC" 
+            data-description="{{ product.product_name}}" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" 
+            data-local="ja" data-currency="jpy">
+        </script>
+    </form>
+{% endblock %}

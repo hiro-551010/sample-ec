@@ -21,18 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import yaml
 with open(os.path.join(BASE_DIR, 'secrets', 'secret_dev.yaml')) as file:
     objs = yaml.safe_load(file)
-
     for obj in objs:
-
-        os.environ['obj'] = objs[obj]
-        print(os.environ['obj'])
-print(os.environ['obj'])
-
+        os.environ[obj] = objs[obj]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -153,8 +149,8 @@ MEDIA_URL = '/images/'
  
 
 # --- stripe ---
-"""
+
 STRIPE_PUBLIC_KEY = os.environ['STRIPE_PUBLIC_KEY']
 
 STRIPE_SECRETS_KEY = os.environ['STRIPE_SECRETS_KEY']
-"""
+
