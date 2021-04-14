@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'front.apps.FrontConfig',
     'cart',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,14 @@ STRIPE_PUBLIC_KEY = os.environ['STRIPE_PUBLIC_KEY']
 
 STRIPE_SECRETS_KEY = os.environ['STRIPE_SECRETS_KEY']
 
+
+# --- user ---
+AUTH_USER_MODEL = 'accounts.User'
+
+LOGIN_URL = '/login/'
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_URL = '/logout/'
+
+LOGOUT_REDIRECT_URL = '/login/'
