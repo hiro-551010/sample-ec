@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'front.apps.FrontConfig',
+    'front',
     'cart',
     'accounts',
 ]

@@ -1,28 +1,15 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(get_user_model(), unique=True, on_delete=models.CASCADE, primary_key=True)
-    username = models.CharField(default="匿名ユーザー",max_length=30)
-    zipcode = models.CharField(default="", max_length=8)
-    prefecture = models.CharField(default="", max_length=6)
-    city = models.CharField(default="", max_length=100)
-    address = models.CharField(default="", max_length=200)
-
-
-
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
+
 class UserManager(BaseUserManager):
- 
     def create_user(self, email, password=None):
         if not email:
             raise ValueError('Users must have an email address')
-        user = self.model(
-            email=self.normalize_email(email),
-        )
+        email = self.normalize_email(email)
+        user = self.model(email=self.normalize_email(email),)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -84,4 +71,11 @@ def create_onetoone(sender, **kwargs):
         
 # --- OneToOneField を同時に作成 ---
 
+class Profile(models.Model):
+    user = models.OneToOneField(get_user_model(), unique=True, on_delete=models.CASCADE, primary_key=True)
+    username = models.CharField(default="匿名ユーザー",max_length=30)
+    zipcode = models.CharField(default="", max_length=8)
+    prefecture = models.CharField(default="", max_length=6)
+    city = models.CharField(default="", max_length=100)
+    address = models.CharField(default="", max_length=200)
 
