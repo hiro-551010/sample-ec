@@ -4,7 +4,7 @@ from .models import Product
 class ProductsAdmin(admin.ModelAdmin):
     
     fields = [
-        'product_name',
+        'product',
         'price',
         'detail',
         'image',

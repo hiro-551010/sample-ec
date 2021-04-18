@@ -3,6 +3,9 @@ from django.contrib.auth.views import LoginView
 from django.contrib import messages
 from accounts.forms import UserCreationForm
 from django.contrib.auth import login
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import ProfileForm
 
 class Login(LoginView):
     template_name = 'accounts/auth.html'
@@ -35,3 +38,18 @@ def signup(request):
             messages.success(request,'登録完了しました')
             return redirect('/')
     return render(request, 'accounts/auth.html', context)
+
+class MypageView(LoginRequiredMixin, View):
+    context = {}
+
+    def get(self, request):
+        return render(request, 'accounts/mypage.html', self.context)
+
+    def post(self, request):
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            messages.success(request,'更新完了しました')
+        return render(request, 'accounts/mypage.html', self.context)
