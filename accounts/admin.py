@@ -7,7 +7,7 @@ class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
 
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(admin.ModelAdmin):
     inlines = (ProfileInline,)
     fieldsets = (
         (None,{
@@ -22,15 +22,6 @@ class CustomUserAdmin(UserAdmin):
                 'is_admin',
             )
         }),
-        (None,{
-            'fields': (
-                'user',
-                'username',
-                'zipcode',
-                'city',
-                'address',
-            )
-        })
     )
-admin.site.register(User)
+admin.site.register(User, CustomUserAdmin)
 

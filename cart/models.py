@@ -11,10 +11,10 @@ class Cart(models.Model):
 
     class Meta:
         db_table = 'Cart'
-
+        ordering = ['data_added']
 
     def __str__(self):
-        return self.card_id
+        return self.cart_id
 
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
@@ -27,10 +27,8 @@ class CartItem(models.Model):
         db_table = 'CartItem'
 
 
-    TAX_AMOUNT = 1.1
-
-    def price_ttc(self):
-        return self.price_ht * (1 + TAX_AMOUNT/100.0)
-
+    def sub_total(self):
+        return self.product.price * self.quantity
+ 
     def __str__(self):
-        return  self.client + " - " + self.product
+        return self.product.name
