@@ -1,49 +1,49 @@
-from cart.apps import CartConfig
-from front.models import Product
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from front.models import Product
-from .models import Cart
 
-@login_required(login_url="/accounts/login")
-def cart_add(request, id):
-    cart = Cart(request)
-    product = Product.objects.get(id=id)
-    cart.add(product=product)
-    return redirect("")
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from .models import Cart, CartItem
 
+##-------------- Cart Views --------------------------------------
 
-@login_required(login_url="/accounts/login")
-def item_clear(request, id):
-    cart = Cart(request)
-    product = Product.objects.get(id=id)
-    cart.remove(product)
-    return redirect("cart_detail")
+class DetailCart(DetailView):
+    model = Cart
+    template_name = 'cart/detail_cart.html'
 
+class ListCart(ListView):
+    model = Cart
+    context_object_name = 'carts'
+    template_name = 'cart/list_carts.html'
 
-@login_required(login_url="/accounts/login")
-def item_increment(request, id):
-    cart = Cart(request)
-    product = Product.objects.get(id=id)
-    cart.add(product=product)
-    return redirect("cart_detail")
+class CreateCart(CreateView):
+    model = Cart
+    template_name = 'cart/list_carts.html'
+
+class Updatecart(UpdateView):
+    model = Cart
+    template_name = 'cart/list_carts.html'
+
+class DeleteCart(DeleteView):
+    model = Cart
+    template_name = 'cart/list_carts.html'
 
 
-@login_required(login_url="/accounts/login")
-def item_decrement(request, id):
-    cart = Cart(request)
-    product = Product.objects.get(id=id)
-    cart.decrement(product=product)
-    return redirect("cart_detail")
+##-------------- CartItem Views --------------------------------------
+class DetailCartItem(DetailView):
+    model = CartItem
+    template_name = 'cart/detail_cart.html'
 
+class ListCartItem(ListView):
+    model = CartItem
+    context_object_name = 'cartitems'
+    template_name = 'cart/list_carts.html'
 
-@login_required(login_url="/accounts/login")
-def cart_clear(request):
-    cart = Cart(request)
-    cart.clear()
-    return redirect("cart_detail")
+class CreateCartItem(CreateView):
+    model = CartItem
+    template_name = 'cart/list_carts.html'
 
+class UpdateCartItem(UpdateView):
+    model = CartItem
+    template_name = 'cart/list_carts.html'
 
-@login_required(login_url="/accounts/login")
-def cart_detail(request):
-    return render(request, 'cart/cart_detail.html')
+class DeleteCartItem(DeleteView):
+    model = Cart
+    template_name = 'cart/list_carts.html'

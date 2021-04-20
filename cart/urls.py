@@ -2,12 +2,19 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('cart/add/<int:id>/', views.cart_add, name='cart_add'),
-    path('cart/item_clear/<int:id>/', views.item_clear, name='item_clear'),
-    path('cart/item_increment/<int:id>/',
-         views.item_increment, name='item_increment'),
-    path('cart/item_decrement/<int:id>/',
-         views.item_decrement, name='item_decrement'),
-    path('cart/cart_clear/', views.cart_clear, name='cart_clear'),
-    path('cart/cart-detail/',views.cart_detail,name='cart_detail'),
+    path('', views.ListCart.as_view(), name='list-carts'),
+    path('cart/<int:pk>/', views.DetailCart.as_view(), name='detail-cart'),
+    path('cart/create/', views.CreateCart.as_view(), name='create-cart'),
+    path('cart/<int:pk>/update/', views.Updatecart.as_view(), name='update-cart'),
+    path('cart/<int:pk>/delete/', views.DeleteCart.as_view(), name='delete-cart'),
+
+]
+
+# CartItem Urls
+urlpatterns += [
+    path('cartitem/', views.ListCartItem.as_view(), name='list-cartitem'),
+    path('cartitem/<int:pk>/', views.DetailCartItem.as_view(), name='detail-cartitem'),
+    path('cartitem/create/', views.CreateCartItem.as_view(), name='create-cartitem'),
+    path('cartitem/<int:pk>/update/', views.UpdateCartItem.as_view(), name='update-cartitem'),
+    path('cartitem/<int:pk>/delete/', views.DeleteCartItem.as_view(), name='delete-cartitem'),
 ]
