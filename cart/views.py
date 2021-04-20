@@ -1,8 +1,9 @@
+from cart.apps import CartConfig
 from front.models import Product
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from front.models import Product
-from cart.cart import Cart
+from .models import Cart
 
 @login_required(login_url="/accounts/login")
 def cart_add(request, id):
