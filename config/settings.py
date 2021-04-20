@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'cart.context_processor.cart_total_amount',
             ],
         },
     },
@@ -167,3 +168,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/accounts/logout/'
 
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+
+CART_SESSION_ID = 'cart'

@@ -1,5 +1,9 @@
 
 from django.db import models
+
+
+
+"""
 from accounts.models import User
 from datetime import datetime
 from front.models import Product
@@ -32,3 +36,4 @@ class CartItem(models.Model):
  
     def __str__(self):
         return self.product.name
+"""

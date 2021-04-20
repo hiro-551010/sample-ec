@@ -1,49 +1,48 @@
-from django.shortcuts import render
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from front.models import Product
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from front.models import Product
+from cart.cart import Cart
 
-from .models import Cart, CartItem
-
-##-------------- Cart Views --------------------------------------
-class DetailCart(DetailView):
-    model = Cart
-    template_name='cart/detail_cart.html'
-
-class ListCart(ListView):
-    model = Cart
-    context_object_name = 'carts'
-    template_name='cart/list_carts.html'
-
-class CreateCart(CreateView):
-    model = Cart
-    template_name = 'cart/create_cart.html'
-
-class Updatecart(UpdateView):
-    model = Cart
-    template_name = 'cart/update_cart.html'
-
-class DeleteCart(DeleteView):
-    model = Cart
-    template_name = 'cart/delete_cart.html'
+@login_required(login_url="/accounts/login")
+def cart_add(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("")
 
 
-##-------------- CartItem Views --------------------------------------
-class DetailCartItem(DetailView):
-    model = CartItem
-    template_name='cartitem/detail_cartitem.html'
+@login_required(login_url="/accounts/login")
+def item_clear(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.remove(product)
+    return redirect("cart_detail")
 
-class ListCartItem(ListView):
-    model = CartItem
-    context_object_name = 'cartitems'
-    template_name='cartitem/list_cartitems.html'
 
-class CreateCartItem(CreateView):
-    model = CartItem
-    template_name = 'cartitem/create_cartitem.html'
+@login_required(login_url="/accounts/login")
+def item_increment(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("cart_detail")
 
-class UpdateCartItem(UpdateView):
-    model = CartItem
-    template_name = 'cartitem/update_cartitem.html'
 
-class DeleteCartItem(DeleteView):
-    model = Cart
-    template_name = 'cartitem/delete_cartitem.html'
+@login_required(login_url="/accounts/login")
+def item_decrement(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.decrement(product=product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/accounts/login")
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("cart_detail")
+
+
+@login_required(login_url="/accounts/login")
+def cart_detail(request):
+    return render(request, 'cart/cart_detail.html')
