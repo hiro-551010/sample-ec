@@ -50,6 +50,18 @@ class User(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
+class Profile(models.Model):
+    user = models.OneToOneField(get_user_model(), unique=True, on_delete=models.CASCADE, primary_key=True)
+    username = models.CharField(default="匿名ユーザー",max_length=30)
+    zipcode = models.CharField(default="", max_length=8)
+    prefecture = models.CharField(default="", max_length=6)
+    city = models.CharField(default="", max_length=100)
+    address = models.CharField(default="", max_length=200)
+
+    def __str__(self):
+        return self.username
+
+
 
 # --- OneToOneField を同時に作成 ---
 
@@ -63,11 +75,5 @@ def create_onetoone(sender, **kwargs):
         
 # --- OneToOneField を同時に作成 ---
 
-class Profile(models.Model):
-    user = models.OneToOneField(get_user_model(), unique=True, on_delete=models.CASCADE, primary_key=True)
-    username = models.CharField(default="匿名ユーザー",max_length=30)
-    zipcode = models.CharField(default="", max_length=8)
-    prefecture = models.CharField(default="", max_length=6)
-    city = models.CharField(default="", max_length=100)
-    address = models.CharField(default="", max_length=200)
+
 

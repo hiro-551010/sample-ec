@@ -4,9 +4,6 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-    <h1>ここはdetail_cart.htmlです</h1>
-    {% for pro in product %}
-        <p>{{pro.product}}</p>
-    {% endfor %}
+    <h1>ここは{{ username }}のカートです</h1>
 {% endif %}
 {% endblock %}
