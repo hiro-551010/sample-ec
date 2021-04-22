@@ -5,6 +5,7 @@ from django.db import models
 from accounts.models import User
 from datetime import datetime
 from front.models import Product
+from accounts.models import Profile
 
 
 class Cart(models.Model):
@@ -24,7 +25,7 @@ class CartItem(models.Model):
     price_ht = models.FloatField(blank=True)
     cart = models.ForeignKey('Cart', on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
-    
+
     class Meta:
         db_table = 'CartItem'
 

@@ -16,7 +16,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">マイページ</a>
           <ul class="dropdown-menu" aria-labelledby="dropdown03">
-            <a class="dropdown-item" href="/accounts/mypage/">マイプロファイル</a>
+            <a class="dropdown-item" href="{% url 'accounts:mypage' %}">マイプロファイル</a>
             <li><a class="dropdown-item" href="#">他のアクション</a></li>
             <li><a class="dropdown-item" href="#">その他</a></li>
           </ul>
@@ -24,14 +24,14 @@
       </ul>
       {% if user.is_authenticated %}
       <div>
-
-          <a class="p-2 link-secondary" href="accounts/logout/">ログアウト</a>
+        <p class="p-2 link-secondary d-inline">{{request.user|truncatechars_html:10}}さん、いらっしゃいませ</p>
+        <a class="p-2 link-secondary" href="{% url 'accounts:logout' %}">ログアウト</a>
       </div>
       
       {% else%}
       <div>
-          <a class="p-2 link-secondary" href="accounts/login/">ログイン</a>
-          <a class="btn btn-outline-info" href="accounts/signup/">新規登録</a>
+          <a class="p-2 link-secondary" href="{% url 'accounts:login' %}">ログイン</a>
+          <a class="btn btn-outline-info" href="{% url 'accounts:signup' %}">新規登録</a>
       </div>
       {% endif %}
       <form>

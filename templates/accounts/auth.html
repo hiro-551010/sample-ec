@@ -21,7 +21,7 @@
                 </div>
  
                 <div class="form-label-group my-3">
-                    <input name="{% if 'login' in request.path%}username{% elif 'signup' in request.path %}email{% endif %}" type="email" id="id_email" class="form-control" placeholder="Email address" required autofocus>
+                    <input name="{% if 'login' in request.path %}username{% elif 'signup' in request.path %}email{% endif %}" type="email" id="id_email" class="form-control" placeholder="Email address" required autofocus>
                 </div>
  
                 <div class="form-label-group my-3">
@@ -34,11 +34,11 @@
  
             {% if 'login' in request.path %}
             <div class="text-center">
-                <a href="/accounts/signup/" class="link-secondary">新規登録はこちら</a>
+                <a href="{% url 'accounts:signup' %}" class="link-secondary">新規登録はこちら</a>
             </div>
             {% elif 'signup' in request.path %}
             <div class="text-center">
-                <a href="/accounts/login/" class="link-secondary">ログインはこちら</a>
+                <a href="{% url 'accounts:login' %}" class="link-secondary">ログインはこちら</a>
             </div>
             {% endif %}
 

@@ -8,10 +8,11 @@ class ListCart(ListView):
     model = Cart
     context_object_name = 'carts'
     template_name = 'cart/cart.html'
-    
+
+    #cartのhtmlにusernameを表示させるための関数
     def get_context_data(self, **kwargs):
         profile = super().get_context_data(**kwargs)
-        profile['username'] = Profile.objects.all()
+        profile['username'] = Profile.objects.filter(user=self.request.user).first().username
         return profile
 
 

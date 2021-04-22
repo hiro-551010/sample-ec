@@ -31,7 +31,7 @@ def signup(request):
             #user.is_active = False
 
             user.save()
-
+            
             #ログインさせる
             login(request, user)
 
