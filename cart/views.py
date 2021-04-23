@@ -1,3 +1,5 @@
+from accounts.models import User
+from django.db.models.fields import proxy
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from .models import Cart, CartItem
@@ -13,7 +15,9 @@ class ListCart(ListView):
     def get_context_data(self, **kwargs):
         profile = super().get_context_data(**kwargs)
         profile['username'] = Profile.objects.filter(user=self.request.user).first().username
-        return profile
+        cart_id = super().get_context_data(**kwargs)
+        cart_id['cart_id'] = User.objects.filter(user=self.request.user).first().Caer
+        return profile, cart_id
 
 
 ##-------------- CartItem Views --------------------------------------

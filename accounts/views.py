@@ -7,6 +7,8 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ProfileForm
 
+from cart.models import Cart
+
 class Login(LoginView):
     template_name = 'accounts/auth.html'
 
@@ -19,20 +21,20 @@ class Login(LoginView):
         return super().form_invalid(form)
 
 def signup(request):
-    context = {}
+    form = UserCreationForm(request.POST)
+    context = {
+        'form': form
+    }
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        
         if form.is_valid():
-
-            #userのメソッドを使いたいけど、セーブは待って欲しい時に使う
             user = form.save(commit=False)
-
-            #メール認証してからuser.saveする場合はこれを使う
-            #user.is_active = False
-
             user.save()
-            
-            #ログインさせる
+            """
+            cart = Cart.objects.create(user=user)
+            cart = form.save(commit=False)
+            cart.save()
+            """
             login(request, user)
 
             messages.success(request,'登録完了しました')

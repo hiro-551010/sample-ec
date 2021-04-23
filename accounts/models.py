@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from config import settings
+from cart.models import Cart
 
 #createsuperuser作成時のクラスのオーバーライド
 class UserManager(BaseUserManager):
@@ -25,10 +26,12 @@ class UserManager(BaseUserManager):
         return user
  
 class User(AbstractBaseUser):
+    
     email = models.EmailField(max_length=255, unique=True,)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     objects = UserManager()
+    cart = models.OneToOneField(Cart, unique=True, on_delete=models.CASCADE)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
  

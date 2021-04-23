@@ -27,6 +27,8 @@ with open(os.path.join(BASE_DIR, 'secrets', 'secret_dev.yaml')) as file:
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = os.environ['SECRET_KEY']
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
     'front',
     'cart',
     'accounts',
+
 ]
 
 MIDDLEWARE = [
@@ -59,7 +62,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -75,10 +81,12 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'config.wsgi.application'
 

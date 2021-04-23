@@ -9,21 +9,21 @@ from accounts.models import Profile
 
 
 class Cart(models.Model):
-    cart_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Cart')
-    data_added = models.DateField(auto_now_add=True)
+    cart_id = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, related_name='Cart')
+    #data_added = models.DateField(auto_now_add=True)
 
     class Meta:
         db_table = 'Cart'
-        ordering = ['data_added']
+        #ordering = ['data_added']
 
     def __str__(self):
         return self.cart_id
 
 class CartItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True,)
+    product = models.ManyToManyField(Product, blank=True,)
+    cart = models.ForeignKey('Cart', on_delete=models.CASCADE)    
     quantity = models.IntegerField(default=1)
     price_ht = models.FloatField(blank=True)
-    cart = models.ForeignKey('Cart', on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
 
     class Meta:
