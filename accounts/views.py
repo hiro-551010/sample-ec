@@ -5,8 +5,7 @@ from accounts.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import CartCreationForm, ProfileForm
-from accounts.models import User
+from .forms import ProfileForm
 from cart.models import Cart
 
 class Login(LoginView):
@@ -21,21 +20,15 @@ class Login(LoginView):
         return super().form_invalid(form)
 
 def signup(request):
-    
-    
     context = {}
     if request.method == 'POST':
         form_user = UserCreationForm(request.POST)
         if form_user.is_valid():
             user = form_user.save(commit=False)
             user.save()
-
-            form_cart = CartCreationForm(request.POST)
-            cart = Cart.objects.create(user=User.email)
-            cart = form_cart.save(commit=False)
+            cart = Cart.objects.create(cart_id=user)
             cart.save()
-
-            login(request, user, cart)
+            login(request, user)
             messages.success(request,'登録完了しました')
             return redirect('/')
     return render(request, 'accounts/auth.html', context)

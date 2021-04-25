@@ -9,7 +9,7 @@ from accounts.models import Profile
 
 
 class Cart(models.Model):
-    cart_id = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, related_name='Cart')
+    cart = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, primary_key=True, related_name='Cart')
     #data_added = models.DateField(auto_now_add=True)
 
     class Meta:
@@ -17,7 +17,7 @@ class Cart(models.Model):
         #ordering = ['data_added']
 
     def __str__(self):
-        return self.cart_id
+        return self.cart
 
 class CartItem(models.Model):
     product = models.ManyToManyField(Product, blank=True,)

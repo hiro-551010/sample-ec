@@ -1,8 +1,10 @@
 from django.urls import path, include
 from . import views
 
+app_name = 'cart'
+
 urlpatterns = [
-    path('<int:pk>/', views.ListCart.as_view(), name='list-carts'),
+    path('<int:pk>/', views.ListCart.as_view(), name='cart'),
 ]
 
 # CartItem Urls

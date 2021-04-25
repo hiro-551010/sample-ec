@@ -24,15 +24,6 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
 
-class CartCreationForm(forms.ModelForm):
-    class Meta:
-        model = Cart
-        fields = ('cart_id',)
-
-    def save(self, commit=True):
-        cart = super().save(commit=False)
-        cart.save()
-        return cart
 
 class ProfileForm(forms.ModelForm):
     class Meta:
