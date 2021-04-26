@@ -6,8 +6,8 @@ from .models import Cart, CartItem
 ##-------------- Cart Views --------------------------------------
 class ListCart(ListView):
     model = Cart
-    context_object_name = 'carts'
-    template_name = 'cart/cart.html'
+    context_object_name = 'cart'
+    template_name = 'cart/cart_list.html'
 
     #cartのhtmlにusernameを表示させるための関数
     def get_context_data(self, **kwargs):
