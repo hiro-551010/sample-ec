@@ -14,9 +14,12 @@ class ListCart(ListView):
         profile = super().get_context_data(**kwargs)
         profile['username'] = Profile.objects.filter(user=self.request.user).first().username
         cart = super().get_context_data(**kwargs)
-        cart['cart'] = Cart.objects.get(pk=cart)
-        return profile, cart
-
+        cart['cart'] = Cart.objects.filter(cart_id=self.request.user.pk).first()
+        context = {
+            'profile': profile,
+            'cart': cart,
+        }
+        return context
 
 ##-------------- CartItem Views --------------------------------------
 class DetailCartItem(DetailView):
