@@ -26,7 +26,7 @@ def signup(request):
         if form_user.is_valid():
             user = form_user.save(commit=False)
             user.save()
-            cart = Cart.objects.create(cart_id=user)
+            cart = Cart.objects.create(cart=user)
             cart.save()
             login(request, user)
             messages.success(request,'登録完了しました')

@@ -6,20 +6,17 @@ from .models import Cart, CartItem
 ##-------------- Cart Views --------------------------------------
 class ListCart(ListView):
     model = Cart
-    context_object_name = 'cart'
+    #context_object_name = 'cart'
     template_name = 'cart/cart_list.html'
 
     #cartのhtmlにusernameを表示させるための関数
     def get_context_data(self, **kwargs):
-        profile = super().get_context_data(**kwargs)
-        profile['username'] = Profile.objects.filter(user=self.request.user).first().username
-        cart = super().get_context_data(**kwargs)
-        cart['cart'] = Cart.objects.filter(cart_id=self.request.user.pk).first()
-        context = {
-            'profile': profile,
-            'cart': cart,
-        }
+        context = super().get_context_data(**kwargs)
+        context['username'] = Profile.objects.filter(user=self.request.user).first().username
+        context['cart'] = Cart.objects.filter(cart_id=self.request.user.pk).first()
         return context
+
+
 
 ##-------------- CartItem Views --------------------------------------
 class DetailCartItem(DetailView):
