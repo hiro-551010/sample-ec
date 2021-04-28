@@ -16,7 +16,7 @@
                 <p class="card-text text-center">{{ pd.detail }}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <a href="">カートに入れる</a>
+                    <a href="{% url 'cart:create-cartitem' %}">カートに入れる</a>
                   </div>
                   <medium class="text-end">{{ pd.price }}円</medium>
                   <a href="{% url 'front:detail' pd.pk %}">詳細を見る</a>

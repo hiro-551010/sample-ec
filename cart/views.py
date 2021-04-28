@@ -2,7 +2,8 @@ from accounts.models import User, Profile
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from .models import Cart, CartItem
-
+from front.models import Product
+from django.urls import reverse
 ##-------------- Cart Views --------------------------------------
 class ListCart(ListView):
     model = Cart
@@ -19,18 +20,15 @@ class ListCart(ListView):
 
 
 ##-------------- CartItem Views --------------------------------------
-class DetailCartItem(DetailView):
-    model = CartItem
-    template_name = 'cart/detail_cart.html'
-
-class ListCartItem(ListView):
-    model = CartItem
-    context_object_name = 'cartitems'
-    template_name = 'cart/list_carts.html'
 
 class CreateCartItem(CreateView):
     model = CartItem
-    template_name = 'cart/list_carts.html'
+    product = Product.objects.all()
+    fields = ['product']
+    
+    def get_success_url(self):
+        return reverse('cart:list user.request.pk')
+    
 
 class UpdateCartItem(UpdateView):
     model = CartItem
