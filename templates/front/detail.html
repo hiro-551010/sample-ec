@@ -6,6 +6,9 @@
     <br>
     {{ product.price }}円
 
+    <a href="{% url 'cart:add_to_cart'%}">カートに入れる</a>
+
+
     <form action="" method="POST">
     {% csrf_token %}
         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" 

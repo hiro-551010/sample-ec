@@ -178,4 +178,4 @@ LOGOUT_URL = '/accounts/logout/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 
-CART_SESSION_ID = 'cart'
+#CART_SESSION_ID = 'cart'

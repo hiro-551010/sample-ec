@@ -25,13 +25,15 @@ class CartItem(models.Model):
     quantity = models.IntegerField(default=1)
     price_ht = models.FloatField(blank=True)
     active = models.BooleanField(default=True)
+    slug = models.SlugField(blank=True, null=True)
+    #price = models.OneToOneField(Product.pk.price, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'CartItem'
 
-
     def sub_total(self):
-        return self.product.price * self.quantity
+        tax_amount = 1.1
+        return tax_amount * self.product.price_ht * self.quantity
  
     def __str__(self):
         return self.product

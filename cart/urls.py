@@ -9,7 +9,7 @@ urlpatterns = [
 
 # CartItem Urls
 urlpatterns += [
-    path('cartitem/create/', views.CreateCartItem.as_view(), name='create-cartitem'),
+    path('add_to_cart/', views.add_to_cart, name='add_to_cart'),
     path('cartitem/<int:pk>/update/', views.UpdateCartItem.as_view(), name='update-cartitem'),
     path('cartitem/<int:pk>/delete/', views.DeleteCartItem.as_view(), name='delete-cartitem'),
 ]

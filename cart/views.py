@@ -1,9 +1,10 @@
 from accounts.models import User, Profile
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from .models import Cart, CartItem
 from front.models import Product
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 ##-------------- Cart Views --------------------------------------
 class ListCart(ListView):
     model = Cart
@@ -17,18 +18,18 @@ class ListCart(ListView):
         context['cart'] = Cart.objects.filter(cart_id=self.request.user.pk).first()
         return context
 
-
-
 ##-------------- CartItem Views --------------------------------------
+@login_required
+def add_to_cart(request):
+    cartitem = get_object_or_404(CartItem, slug=CartItem.slug)
+    context = {
+        'cartitem': cartitem,
+    }
+    return render(request, 'cart/cart_list.html', context)
 
-class CreateCartItem(CreateView):
-    model = CartItem
-    product = Product.objects.all()
-    fields = ['product']
-    
-    def get_success_url(self):
-        return reverse('cart:list user.request.pk')
-    
+
+
+
 
 class UpdateCartItem(UpdateView):
     model = CartItem

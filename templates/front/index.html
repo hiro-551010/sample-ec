@@ -12,11 +12,11 @@
             <div class="position-relative">
               <img class="bd-placeholder-img card-img-top" width="100%" height="255" src="{{ pd.image.url }}" alt="">
               <div class="card-body">
-                <h5 class="font-weight-bold">{{ pd.product_name }}</h5>
+                <h5 class="font-weight-bold">{{ pd.product }}</h5>
                 <p class="card-text text-center">{{ pd.detail }}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <a href="{% url 'cart:create-cartitem' %}">カートに入れる</a>
+                    
                   </div>
                   <medium class="text-end">{{ pd.price }}円</medium>
                   <a href="{% url 'front:detail' pd.pk %}">詳細を見る</a>

@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.db.models.query import FlatValuesListIterable
 from accounts.models import Profile
-from config import settings
-from cart.models import Cart
+
 
 class UserCreationForm(forms.ModelForm):
     password = forms.CharField()
