@@ -10,11 +10,9 @@ from accounts.models import Profile
 
 class Cart(models.Model):
     cart = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, primary_key=True, )
-    #data_added = models.DateField(auto_now_add=True)
 
     class Meta:
         db_table = 'Cart'
-        #ordering = ['data_added']
 
     def __int__(self):
         return self.cart
@@ -29,11 +27,12 @@ class CartItemManager(models.Manager):
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)    
-    quantity = models.PositiveIntegerField(default=1)
-    price_ht = models.FloatField(blank=True)
+    quantity = models.PositiveIntegerField()
+    
     active = models.BooleanField(default=True)
     objects = CartItemManager()
     #price = models.OneToOneField(Product.pk.price, on_delete=models.CASCADE)
+    #price_ht = models.FloatField(blank=True)
 
     class Meta:
         db_table = 'CartItem'

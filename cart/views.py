@@ -26,9 +26,11 @@ def add_to_cart(request):
         product_id = request.POST.get('product_id')
         quantity = request.POST.get('quantity')
         product = get_object_or_404(Product,id=product_id)
+        user = User.objects.all()
         if int(quantity) <= 0:
-            resopnse = JsonResponse({'message': '０より大きい数字を入れてください'})
-            return resopnse
+            response = JsonResponse({'message': '０より大きい数字を入れてください'})
+            print(response)
+            return response
         cart = Cart.objects.get(user=request.user)
         if all([product_id, cart, quantity]):
             CartItem.objects.save_item(

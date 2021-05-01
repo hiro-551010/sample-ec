@@ -23,15 +23,14 @@
           </ul>
         </li>
       </ul>
-      
       <div>
         <p class="p-2 link-secondary d-inline">{{request.user|truncatechars_html:10}}さん、いらっしゃいませ</p>
         <a class="p-2 link-secondary" href="{% url 'accounts:logout' %}">ログアウト</a>
       </div>
-      {% else%}
+      {% else %}
       <div>
-          <a class="p-2 link-secondary" href="{% url 'accounts:login' %}">ログイン</a>
-          <a class="btn btn-outline-info" href="{% url 'accounts:signup' %}">新規登録</a>
+        <a class="p-2 link-secondary" href="{% url 'accounts:login' %}">ログイン</a>
+        <a class="p-2 link-secondary btn btn-outline-info" href="{% url 'accounts:signup' %}">新規登録</a>
       </div>
       {% endif %}
       <form>
