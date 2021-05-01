@@ -1,10 +1,11 @@
 from accounts.models import User, Profile
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from .models import Cart, CartItem
 from front.models import Product
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse, Http404, response
 ##-------------- Cart Views --------------------------------------
 class ListCart(ListView):
     model = Cart
@@ -21,20 +22,26 @@ class ListCart(ListView):
 ##-------------- CartItem Views --------------------------------------
 @login_required
 def add_to_cart(request):
-    cartitem = get_object_or_404(CartItem, slug=CartItem.slug)
-    context = {
-        'cartitem': cartitem,
-    }
-    return render(request, 'cart/cart_list.html', context)
+    if request.is_ajax:
+        product_id = request.POST.get('product_id')
+        quantity = request.POST.get('quantity')
+        product = get_object_or_404(Product,id=product_id)
+        if int(quantity) <= 0:
+            resopnse = JsonResponse({'message': '０より大きい数字を入れてください'})
+            return resopnse
+        cart = Cart.objects.get(user=request.user)
+        if all([product_id, cart, quantity]):
+            CartItem.objects.save_item(
+                quantity=quantity, product_id=product_id,cart=cart[0]
+            )            
+            return JsonResponse({'message': '商品をカートに入れました'})
+
+
+
+    return redirect('cart/cart_list.html')
 
 
 
 
 
-class UpdateCartItem(UpdateView):
-    model = CartItem
-    template_name = 'cart/list_carts.html'
 
-class DeleteCartItem(DeleteView):
-    model = Cart
-    template_name = 'cart/list_carts.html'

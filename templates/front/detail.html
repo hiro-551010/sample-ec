@@ -6,7 +6,45 @@
     <br>
     {{ product.price }}円
 
-    <a href="{% url 'cart:add_to_cart'%}">カートに入れる</a>
+    
+    
+    <input name="csrf_token" value="{{ csrf_token }}" type="hidden">
+    {% if is_added %}
+        <p class="btn btn-danger">カートに追加済みです</p>
+    {% else %}
+    <input type="number" id="quantity" name="quantity" min="1"><br>
+    <button id="add_to_cart" type="button" class="btn btn-primary">カートに追加</button>
+    {% endif %}
+    
+    <script>
+        $('#add_to_cart').click(function(){
+            var quantity = $("#quantity").val();
+            var token = $('input[name="csrf_token"]').attr('value');
+            $.ajaxSetup({
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader('X-CSRFToken', token);
+                }
+            })
+            $.ajax({
+                url: "{% url ''%}",
+                type: "POST",
+                data: {product_id: "{{ object.id }}", quantity:quantity};
+                datatype: "json",
+                success: function(json){
+                    if(json.message){
+                        $('#add_to_cart').attr('class', 'btn btn-danger');
+                        $('#add_to_cart').html('カートに登録済みです');
+                        $('#add_to_cart').prop('disabled', true);                        
+                        alert(json.message);
+                    }
+                    
+                },
+                error: function(error){
+                    alert(error.responseJSON.message);
+                }
+            })
+        })
+    </script>
 
 
     <form action="" method="POST">

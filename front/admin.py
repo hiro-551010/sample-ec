@@ -2,9 +2,8 @@ from django.contrib import admin
 from .models import Product
 
 class ProductsAdmin(admin.ModelAdmin):
-    
     fields = [
-        'product',
+        'name',
         'price',
         'detail',
         'image',
