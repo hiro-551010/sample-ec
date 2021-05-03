@@ -13,6 +13,7 @@
     <p class="btn btn-danger">カートに追加済みです</p>
     {% else %}
     <input type="number" id="quantity" name="quantity" min="1" value="1"><br>
+
     <button id="add_to_cart" type="button" class="btn btn-primary">カートに追加</button>
     {% endif %}
     
@@ -37,7 +38,6 @@
                         $('#add_to_cart').prop('disabled', true);                        
                         alert(json.message);
                     }
-                    
                 },
                 error: function(error){
                     alert(error.responseJSON.message);

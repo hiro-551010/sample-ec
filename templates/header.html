@@ -18,7 +18,7 @@
           <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">マイページ</a>
           <ul class="dropdown-menu" aria-labelledby="dropdown03">
             <a class="dropdown-item" href="{% url 'accounts:mypage' %}">マイプロフィール</a>
-            <li><a class="dropdown-item" href="{% url 'cart:list' request.user.pk %}">マイカート</a></li>
+            <li><a class="dropdown-item" href="{% url 'cart:list' pk=request.user.pk %}">マイカート</a></li>
             <li><a class="dropdown-item" href="#">その他</a></li>
           </ul>
         </li>

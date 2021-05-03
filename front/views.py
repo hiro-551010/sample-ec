@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView
 from .models import Product
-from cart.models import CartItem
+from cart.models import CartItem, Cart
+from accounts.models import User
+
 """
 # --- stripe決済 ---
 from django.conf import settings
@@ -23,11 +25,23 @@ class ProductsDetail(DetailView):
     template_name = 'front/detail.html'
 
     def get_context_data(self, **kwargs):
+        
         context = super().get_context_data(**kwargs)
-        context['is_added'] = CartItem.objects.filter(cart_id=self.request.user.pk, product_id=kwargs.get('object').id).first()
+        context['is_added'] = CartItem.objects.filter(cart_id=self.request.user.pk,product_id=kwargs.get('object').id).first()
+        """
+        #①
+        context['product_id'] = CartItem.objects.filter(product_id=kwargs.get('object').id).first()
+        #②
+        print(self.request.user.pk)
+        #③
+        context['cartitem'] = CartItem.objects.filter().first()
+
+        #④
+        print(context['product_id'])
+
+        print(context['cartitem'])
+        """
         return context
-
-
         
 """
     # --- stripe決済 ---

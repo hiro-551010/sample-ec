@@ -28,7 +28,6 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)    
     quantity = models.PositiveIntegerField()
-    
     active = models.BooleanField(default=True)
     objects = CartItemManager()
     #price = models.OneToOneField(Product.pk.price, on_delete=models.CASCADE)
