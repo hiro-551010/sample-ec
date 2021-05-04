@@ -1,4 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<div class="col-10 offset-1">
+{% if items %}
+<table>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td style="width:20%">
+                {% if item.picture %}
+                <img src="{{ item.picture }}" width="75px" height="75px">
+                {% endif %}
+            </td>
+            <td style="width:20%">
+                {{ item.name }}<br>{{ item.price }}円
+            </td>
+            <td>
+                {{ item.quantity }}個<br>
+            </td>    
+            <td align="right">
+                <a href="{% url 'cart:update' pk=item.id %}" class="btn btn-primary">変更する</a>
+            </td>
+            <td align="right">
+                <a href="{% url 'cart:delete' pk=item.id %}" class="btn btn-danger">削除する</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<hr>
+<h3 class="offset-9">合計: {{ total_price }}円</h3>
+<a class="offset-9 btn btn-secondary" href="{% url 'accounts:mypage' %}">商品を購入するためには個人情報の入力が必要です</a>
+{% else %}
+<h2>カートの中に商品は入っていません</h2>
+{% endif %}
+</div>
 {% endblock %}

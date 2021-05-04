@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<p>{{ object.product.name}}の数量を変更しますか？</p>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="更新">
+</form>
+{% endblock %}

@@ -29,7 +29,7 @@
             $.ajax({
                 url: "{% url 'cart:add_to_cart' %}",
                 type: "POST",
-                data: {product_id: "{{ object.id }}", quantity:quantity},
+                data: {product_id: "{{ object.id }}", quantity: quantity},
                 datatype: "json",
                 success: function(json){
                     if(json.message){

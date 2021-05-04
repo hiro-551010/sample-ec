@@ -26,10 +26,10 @@ class UserCreationForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = (
+        fields = [
             'username',
             'zipcode',
             'prefecture',
             'city',
             'address',
-        )
+        ]

@@ -7,6 +7,8 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ProfileForm
 from cart.models import Cart
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 
 class Login(LoginView):
     template_name = 'accounts/auth.html'
@@ -33,11 +35,17 @@ def signup(request):
             return redirect('/')
     return render(request, 'accounts/auth.html', context)
 
-class MypageView(LoginRequiredMixin, View):
-    context = {}
+class MypageView(LoginRequiredMixin, CreateView):
+    template_view = 'accounts/mypage.html'
+    form_class = ProfileForm
+    success_url = reverse_lazy('cart:list')
 
     def get(self, request):
-        return render(request, 'accounts/mypage.html', self.context)
+        form = ProfileForm(request.GET)
+        if form.is_valid():
+            form = form.cleaned_data['text']
+            
+        return render(request, 'accounts/mypage.html', {'form': form})
 
     def post(self, request):
         form = ProfileForm(request.POST, request.FILES)
@@ -46,4 +54,4 @@ class MypageView(LoginRequiredMixin, View):
             profile.user = request.user
             profile.save()
             messages.success(request,'更新完了しました')
-        return render(request, 'accounts/mypage.html', self.context)
+        return render(request, 'accounts/mypage.html')

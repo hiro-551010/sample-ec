@@ -17,7 +17,6 @@ class Cart(models.Model):
     def __int__(self):
         return self.cart
 
-
 class CartItemManager(models.Manager):
     def save_item(self, product_id, quantity, cart):
         c = self.model(quantity=quantity, product_id=product_id, cart=cart)
@@ -36,11 +35,15 @@ class CartItem(models.Model):
     class Meta:
         db_table = 'CartItem'
         unique_together = [['product', 'cart']]
-    """
-    def sub_total(self):
-        tax_amount = 1.1
-        return tax_amount * self.product.price_ht * self.quantity
-    """
+
     def __str__(self):
         return self.product
 
+class Addresses(models.Model):
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'Addresses'
+    
+    def __str__(self):
+        return self.user

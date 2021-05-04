@@ -25,24 +25,9 @@ class ProductsDetail(DetailView):
     template_name = 'front/detail.html'
 
     def get_context_data(self, **kwargs):
-        
         context = super().get_context_data(**kwargs)
         context['is_added'] = CartItem.objects.filter(cart_id=self.request.user.pk,product_id=kwargs.get('object').id).first()
-        """
-        #①
-        context['product_id'] = CartItem.objects.filter(product_id=kwargs.get('object').id).first()
-        #②
-        print(self.request.user.pk)
-        #③
-        context['cartitem'] = CartItem.objects.filter().first()
-
-        #④
-        print(context['product_id'])
-
-        print(context['cartitem'])
-        """
         return context
-        
 """
     # --- stripe決済 ---
     def post(self, request, *args, **kwargs):
@@ -68,8 +53,12 @@ class ProductsDetail(DetailView):
     # --- stripe決済 ---
 """
 
+def PurchaseHistory(request):
+    
+    context = {
 
-
+    }
+    render(request, 'front/history.html', context)
 
 
 
