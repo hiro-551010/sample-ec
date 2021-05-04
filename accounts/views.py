@@ -9,6 +9,7 @@ from .forms import ProfileForm
 from cart.models import Cart
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
+from .models import Profile
 
 class Login(LoginView):
     template_name = 'accounts/auth.html'
@@ -35,19 +36,13 @@ def signup(request):
             return redirect('/')
     return render(request, 'accounts/auth.html', context)
 
-class MypageView(LoginRequiredMixin, CreateView):
+class MypageView(LoginRequiredMixin, View):
     template_view = 'accounts/mypage.html'
-    form_class = ProfileForm
     success_url = reverse_lazy('cart:list')
-
     def get(self, request):
-        form = ProfileForm(request.GET)
-        if form.is_valid():
-            form = form.cleaned_data['text']
-            
-        return render(request, 'accounts/mypage.html', {'form': form})
+        return render(request, 'accounts/mypage.html')
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             profile = form.save(commit=False)

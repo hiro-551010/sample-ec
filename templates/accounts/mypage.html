@@ -8,16 +8,15 @@
         <h3 class="pb-4 mb-4 font-italic border-bottom my-2">
             マイページ
         </h3>
-        {{ form.as_p }}
         <form class="row g-3" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="col-12">
               <label class="form-label">ユーザー名（公開されます）</label>
-              <input type="text" class="form-control" id="id_username" name="username" placeholder="煉獄 杏寿郎">
+              <input type="text" class="form-control" id="id_username" name="username" value="{{ username }}" placeholder="煉獄 杏寿郎">
             </div>
             <div class="col-md-2">
               <label class="form-label">郵便番号</label>
-              <input type="text" class="form-control" id="id_zipcode" name="zipcode">
+              <input type="text" class="form-control" id="id_zipcode" name="zipcode" value="{{ zipcode }}">
             </div>
             <div class="col-md-4">
               <label class="form-label">都道府県</label>
@@ -40,7 +39,7 @@
               <button type="submit" class="btn btn-success">保存</button>
             </div>
         </form>
- 
+
       </div>
  
 

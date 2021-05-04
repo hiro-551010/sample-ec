@@ -50,7 +50,7 @@ def add_to_cart(request):
     if request.is_ajax:
         product_id = request.POST.get('product_id')
         quantity = request.POST.get('quantity')
-        product = get_object_or_404(Product,id=product_id)
+        product = get_object_or_404(Product, id=product_id)
         if int(quantity) <= 0:
             response = JsonResponse({'message': '０より大きい数字を入れてください'})
             response.status_code = 403
