@@ -36,17 +36,12 @@ def signup(request):
             return redirect('/')
     return render(request, 'accounts/auth.html', context)
 
-class MypageView(LoginRequiredMixin, View):
-    template_view = 'accounts/mypage.html'
-    success_url = reverse_lazy('cart:list')
-    def get(self, request):
-        return render(request, 'accounts/mypage.html')
-
-    def post(self, request, *args, **kwargs):
-        form = ProfileForm(request.POST, request.FILES)
+def mypage(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)    
         if form.is_valid():
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
             messages.success(request,'更新完了しました')
-        return render(request, 'accounts/mypage.html')
+    return render(request, 'accounts/mypage.html')

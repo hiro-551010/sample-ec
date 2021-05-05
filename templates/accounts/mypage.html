@@ -8,33 +8,30 @@
         <h3 class="pb-4 mb-4 font-italic border-bottom my-2">
             マイページ
         </h3>
-        <form class="row g-3" method="POST" enctype="multipart/form-data">
+        <form class="row g-3 h-adr" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="col-12">
               <label class="form-label">ユーザー名（公開されます）</label>
-              <input type="text" class="form-control" id="id_username" name="username" value="{{ username }}" placeholder="煉獄 杏寿郎">
+              <input type="text" class="form-control" id="id_username" name="username" value="{{ user.profile.username }}" placeholder="">
             </div>
             <div class="col-md-2">
               <label class="form-label">郵便番号</label>
-              <input type="text" class="form-control" id="id_zipcode" name="zipcode" value="{{ zipcode }}">
+              <input type="hidden" class="p-country-name" value="Japan">
+              <input type="text" id="id_zipcode" name="zipcode" class="form-control p-postal-code" size="8" maxlength="8" value="{{ user.profile.zipcode }}">
             </div>
             <div class="col-md-4">
               <label class="form-label">都道府県</label>
-              <select id="id_prefecture" name="prefecture" class="form-select">
-                <option selected>選択...</option>
-                <option>...</option>
-              </select>
+              <input type="text" id="id_prefecture" name="prefecture" class="form-select p-region">
             </div>
             <div class="col-md-6">
-              <label class="form-label">市区</label>
-              <input type="text" class="form-control" id="id_city" name="city">
+              <label class="form-label">市町村区</label>
+              <input type="text" class="form-control p-locality p-street-address" id="id_city" name="city">
             </div>
               
             <div class="col-12">
-              <label class="form-label">住所</label>
-              <input type="text" class="form-control" id="id_address" name="address" placeholder="">
+              <label class="form-label">建物名</label>
+              <input type="text" class="form-control " id="id_address" name="address" value="{{ user.profile.address }}">
             </div>
- 
             <div class="col-12">
               <button type="submit" class="btn btn-success">保存</button>
             </div>

@@ -51,8 +51,9 @@ INSTALLED_APPS = [
     'front',
     'cart',
     'accounts',
-
 ]
+
+USE_I18N = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

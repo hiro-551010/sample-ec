@@ -5,6 +5,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from config import settings
 
 
+
 #createsuperuser作成時のクラスのオーバーライド
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -54,9 +55,9 @@ class User(AbstractBaseUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, unique=True, on_delete=models.CASCADE, primary_key=True)
-    username = models.CharField(default="匿名ユーザー",max_length=30)
+    username = models.CharField(default="匿名ユーザー",max_length=30,)
     zipcode = models.CharField(default="", max_length=8)
-    prefecture = models.CharField(default="", max_length=6)
+    prefecture = models.CharField(default="", max_length=5)
     city = models.CharField(default="", max_length=100)
     address = models.CharField(default="", max_length=200)
 
