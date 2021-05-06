@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from config import settings
-
+from front.models import Product
 
 
 #createsuperuser作成時のクラスのオーバーライド
@@ -64,8 +64,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.username
 
-
-
 # --- OneToOneField を同時に作成 ---
 
 from django.db.models.signals import post_save
@@ -77,6 +75,9 @@ def create_onetoone(sender, **kwargs):
         Profile.objects.create(user=kwargs['instance'])
         
 # --- OneToOneField を同時に作成 ---
+
+
+
 
 
 

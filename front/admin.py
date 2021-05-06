@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product
+from .models import OrderHistory, Product
 
 class ProductsAdmin(admin.ModelAdmin):
     fields = [
@@ -10,3 +10,4 @@ class ProductsAdmin(admin.ModelAdmin):
         ]
         
 admin.site.register(Product, ProductsAdmin)
+admin.site.register(OrderHistory)
