@@ -40,7 +40,7 @@ class ProductsDetail(DetailView):
             context['message'] = 'カード決済に失敗しました'
             return render(request, 'cart:list', context)
         else:
-            OrderHistory.objects.create(product=product, email=request.user, price=amount, stripe_id=charge.id, order_at=timezone.now)
+            OrderHistory.objects.create(product=product, email=request.user, price=product.price, stripe_id=charge.id, order_at=timezone.now)
             return redirect('cart:list')
 
     def get_context_data(self, **kwargs):
@@ -51,12 +51,13 @@ class ProductsDetail(DetailView):
     # --- stripe決済 ---
 
 
-def PurchaseHistory(request):
-    
+def historys(request):
+    historys = OrderHistory.objects.all()
     context = {
-
+        'historys': historys,
     }
-    render(request, 'front/history.html', context)
+    print(context["historys"])
+    return render(request, 'front/historys.html', context)
 
 
 

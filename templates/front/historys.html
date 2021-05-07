@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container">
+{% if history %}
+    <table>
+        <tbody>
+            {% for history in historys %}
+            <tr>
+                <td style="width:20%">
+                    {{ history.product }}<br>{{ item.price }}円
+                </td>
+                <td>
+                    {{ item.quantity }}個<br>
+                </td>    
+                <td align="right">
+                    <a href="{% url 'cart:update' pk=item.id %}" class="btn btn-primary">変更する</a>
+                </td>
+                <td align="right">
+                    <a href="{% url 'cart:delete' pk=item.id %}" class="btn btn-danger">削除する</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <h1>まだ購入された商品はありません。</h1>
+{% endif %}
+
+{% endblock %}

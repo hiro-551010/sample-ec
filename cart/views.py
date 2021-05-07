@@ -9,6 +9,10 @@ from django.http import JsonResponse, Http404, response
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .forms import CartUpdateForm
+from front.models import OrderHistory
+from django.conf import settings
+import stripe
+stripe.api_key = settings.STRIPE_SECRETS_KEY
 ##-------------- Cart Views --------------------------------------
 """
 class ListCart(ListView):
@@ -27,6 +31,7 @@ class CartItemView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_id = self.request.user.pk
+        profile = Profile.objects.all()
         query = CartItem.objects.filter(cart_id=user_id)
         total_price = 0
         items = []
@@ -43,7 +48,30 @@ class CartItemView(LoginRequiredMixin, TemplateView):
             items.append(tmp_item)
         context['total_price'] = total_price
         context['items'] = items
+
         return context
+    
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        address = context.get('address')
+        total_price = context.get('total_price')
+        product = context.get('items') 
+        cart = context['cart']
+        token = request.POST('stripeToken')
+        if (not address) or (not cart):
+            raise Http404('注文処理でエラーが発生しました')
+        try:
+            charge = stripe.Charge.create(
+                amount=total_price,
+                currency='jpy',
+                source=token,
+            )
+        except stripe.error.CartError as e:
+            raise Http404('注文処理でエラーが発生しました')
+        else:
+            OrderHistory.objects.create(product=product, email=request.user, price=product.price, stripe_id=charge.id, order_at=timezone.now)
+            return redirect('cart:list')
+
 ##-------------- CartItem Views --------------------------------------
 @login_required
 def add_to_cart(request):
@@ -72,6 +100,9 @@ class CartDeleteView(LoginRequiredMixin, DeleteView):
     model = CartItem
     success_url = reverse_lazy('cart:list')
 
+
+
+    
 
 
 

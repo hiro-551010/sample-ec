@@ -45,3 +45,4 @@ def mypage(request):
             profile.save()
             messages.success(request,'更新完了しました')
     return render(request, 'accounts/mypage.html')
+

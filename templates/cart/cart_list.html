@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="col-10 offset-1">
+<div class="container">
 {% if items %}
 <table>
     <tbody>
@@ -30,6 +30,14 @@
 <hr>
 <h3 class="offset-9">合計: {{ total_price }}円</h3>
 <a class="offset-9 btn btn-secondary" href="{% url 'accounts:mypage' %}">商品を購入するためには個人情報の入力が必要です</a>
+<form action="" method="POST">
+    {% csrf_token %}
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" 
+            data-key="{{ public_key }}" data-amount="{{ product.price }}" data-name="DjangoEC" 
+            data-description="{{ product.product_name}}" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" 
+            data-local="ja" data-currency="jpy">
+        </script>
+    </form>
 {% else %}
 <h2>カートの中に商品は入っていません</h2>
 {% endif %}
