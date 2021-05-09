@@ -9,7 +9,7 @@ from accounts.models import Profile
 
 
 class Cart(models.Model):
-    cart = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, primary_key=True, )
+    cart = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, primary_key=True )
 
     class Meta:
         db_table = 'Cart'

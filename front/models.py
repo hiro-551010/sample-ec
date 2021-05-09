@@ -19,6 +19,7 @@ class Product(models.Model):
 
 
 class OrderHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     quantity = IntegerField(null=True)
     product = models.CharField(default='商品名', max_length=100)
     price = models.IntegerField(null=True)

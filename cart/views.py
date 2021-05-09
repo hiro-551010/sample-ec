@@ -11,8 +11,13 @@ from django.urls import reverse_lazy
 from .forms import CartUpdateForm
 from front.models import OrderHistory
 from django.conf import settings
+
+# --- stripe決済 ---
 import stripe
+from django.utils import timezone
 stripe.api_key = settings.STRIPE_SECRETS_KEY
+# --- stripe決済 ---
+
 ##-------------- Cart Views --------------------------------------
 """
 class ListCart(ListView):
@@ -48,7 +53,7 @@ class CartItemView(LoginRequiredMixin, TemplateView):
             items.append(tmp_item)
         context['total_price'] = total_price
         context['items'] = items
-
+        context['public_key'] = settings.STRIPE_PUBLIC_KEY
         return context
     
     def post(self, request, *args, **kwargs):
@@ -56,9 +61,9 @@ class CartItemView(LoginRequiredMixin, TemplateView):
         address = context.get('address')
         total_price = context.get('total_price')
         product = context.get('items') 
-        cart = context['cart']
+        #cart = context['cart']
         token = request.POST('stripeToken')
-        if (not address) or (not cart):
+        if (not address):
             raise Http404('注文処理でエラーが発生しました')
         try:
             charge = stripe.Charge.create(
@@ -69,8 +74,8 @@ class CartItemView(LoginRequiredMixin, TemplateView):
         except stripe.error.CartError as e:
             raise Http404('注文処理でエラーが発生しました')
         else:
-            OrderHistory.objects.create(product=product, email=request.user, price=product.price, stripe_id=charge.id, order_at=timezone.now)
-            return redirect('cart:list')
+            OrderHistory.objects.create(user=request.user, product=product, quantity=item.quantity, price=product.price, stripe_id=charge.id, order_at=timezone.now)
+            return render(request, 'cart:list', context)
 
 ##-------------- CartItem Views --------------------------------------
 @login_required

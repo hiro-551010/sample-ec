@@ -3,6 +3,7 @@
 <div class="container">
 {% if items %}
 <table>
+    
     <tbody>
         {% for item in items %}
         <tr>
@@ -33,8 +34,8 @@
 <form action="" method="POST">
     {% csrf_token %}
         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" 
-            data-key="{{ public_key }}" data-amount="{{ product.price }}" data-name="DjangoEC" 
-            data-description="{{ product.product_name}}" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" 
+            data-key="{{ public_key }}" data-amount="{{ total_price }}" data-name="DjangoEC" 
+            data-description="{{ cartitem.product }}" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" 
             data-local="ja" data-currency="jpy">
         </script>
     </form>
