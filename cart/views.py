@@ -54,6 +54,7 @@ class CartItemView(LoginRequiredMixin, TemplateView):
         context['total_price'] = total_price
         context['items'] = items
         context['public_key'] = settings.STRIPE_PUBLIC_KEY
+        context['secrets_key'] = settings.STRIPE_SECRETS_KEY
         return context
     
     def post(self, request, *args, **kwargs):
@@ -74,7 +75,7 @@ class CartItemView(LoginRequiredMixin, TemplateView):
         except stripe.error.CartError as e:
             raise Http404('注文処理でエラーが発生しました')
         else:
-            OrderHistory.objects.create(user=request.user, product=product, quantity=item.quantity, price=product.price, stripe_id=charge.id, order_at=timezone.now)
+            #OrderHistory.objects.create(user=request.user, product=product, quantity=item.quantity, price=product.price, stripe_id=charge.id, order_at=timezone.now)
             return render(request, 'cart:list', context)
 
 ##-------------- CartItem Views --------------------------------------
